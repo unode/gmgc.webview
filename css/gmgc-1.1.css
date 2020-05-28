@@ -1,0 +1,62 @@
+body > .container {
+    padding: 60px 15px ;
+
+}
+
+.footer {
+    border-top: 1px solid #ddd;
+    background: rgba(245,245,245,0.8);
+    min-height: 25px;
+    height: 25px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    line-height: 20px;
+    z-index: 101;
+
+}
+
+.popupBG {
+    background: #99a1d3;
+    color: white;
+}
+
+.popupFG {
+    background: #cfdaff;
+    color: black;
+}
+.annoBlock {
+    border: 1px solid #eee;
+    margin: 5px;
+    padding: 10px 10px 0 10px;
+}
+.imgBox {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-bottom: 15px;
+}
+
+.eggnog_table th {
+    white-space: nowrap;
+}
+.cellLimited {
+    max-width: 100%;
+    max-height: 50px;
+    overflow-y: auto;
+}
+.loading-modal {
+    border: none;
+    display:    none;
+    position:   fixed;
+    z-index:    9999;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: url('/img/l.gif') 50% 50% no-repeat;
+
+}
+body.loading .loading-modal {
+    display: block;
+}

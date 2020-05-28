@@ -1,0 +1,43 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "description": "",
+  "width": 350,
+  "height": 200,
+  "data": {
+    "values": [
+      {"samples": 104, "homologs": 300, "biome": "human gut"},
+      {"samples": 27, "homologs": 21, "biome": "pig gut"},
+      {"samples": 32, "homologs": 33, "biome": "mouse gut"},
+      {"samples": 11, "homologs": 80, "biome": "human nose"},
+      {"samples": 19, "homologs": 92, "biome": "wastewater"}
+    ]
+  },
+  "selection": {
+    "view": {"type": "interval", "bind": "scales"}
+  },
+  "mark": "circle",
+  "encoding": {
+    "y": {
+      "field": "samples",
+      "type": "quantitative",
+      "scale": {
+        "type": "log"
+      },
+      "axis": {
+        "gridColor": "#eeeeee"
+      }
+    },
+    "x": {
+      "field": "homologs",
+      "type": "quantitative",
+      "scale": {"type": "log"},
+      "axis": {
+        "gridColor": "#eeeeee"
+      }
+    },
+    "color": {
+      "field": "biome",
+      "type": "nominal"
+    }
+  }
+}

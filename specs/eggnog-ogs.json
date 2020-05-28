@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "description": "A simple bar chart with embedded data.",
+  "data": {
+    "values": [
+      {"og": "COG0012@1", "occurrences": 218},
+      {"og": "COG0015@12", "occurrences": 145},
+      {"og": "COG0123@11331", "occurrences": 213},
+      {"og": "COG0122@1", "occurrences": 331},
+      {"og": "COG0362@1", "occurrences": 121},
+      {"og": "COG4212@33131", "occurrences": 423},
+      {"og": "COG0242@3", "occurrences": 139},
+      {"og": "COG0152@3411", "occurrences": 137},
+      {"og": "COG4312@1231", "occurrences": 232}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "og",
+      "type": "ordinal",
+      "sort": "-y",
+      "axis": {
+        "title": "eggNOG OG",
+        "labelAngle": -90
+      }
+    },
+    "y": {
+      "field": "occurrences",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of occurrences"
+      }
+    }
+  }
+}
+

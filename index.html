@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GMGC result report</title>
+    <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="/css/bootstrap-4.5.0.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk">
+    <link rel="stylesheet" href="/css/gmgc-1.1.css">
+
+    <!-- Bootstrap dependencies -->
+    <script src="/js/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" ></script>
+    <script src="/js/popper-1.16.0.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"></script>
+    <script src="/js/bootstrap-4.5.0.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <!-- Vega lite -->
+    <script src="/js/vega-5.12.1.min.js"></script>
+    <script src="/js/vega-lite-4.12.2.min.js"></script>
+    <script src="/js/vega-embed-6.8.0.min.js"></script>
+
+    <script src="/js/gmgc-webview-1.0.js"></script>
+
+    <style media="screen">
+      /* Add space between Vega-Embed links  */
+      .vega-actions a {
+        margin-right: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="mainNav" class="navbar fixed-top navbar-expand-lg navbar-light bg-light" style="padding: 0 10px ; border-bottom: 1px solid #aaa;">
+      <div class="container">
+        <a class="navbar-brand" href="/"><img class="d-inline-block align-top" height="30px" src="/img/logo_small.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item"> <a class="nav-link" href="download.cgi">Downloads</a></li>
+            <li class="nav-item"> <a class="nav-link" href="help.cgi">Help</a></li>
+            <li class="nav-item"> <a class="nav-link" href="about.cgi">About &amp; contact</a></li>
+          </ul>
+          <!-- TODO: Should trigger "Save page" -->
+          <p class="my-2">
+            <a id="server-errors" href="" title="Show errors">⚠️</a>
+            <a id="save-page" href="" title="Save page">💾</a>
+          </p>
+        </div>
+      </div>
+    </nav>
+
+    <div id="main" class="container">
+      <div class="row">
+        <div class="col-sm">
+          Taxon of origin: <em><span id="detected-taxon">Kleybsiella aerogenes</span></em> (taxon level) - <strong><span id="detection-taxon-support">132/179</span></strong><br/>
+          Most common biome: <em><span id="detected-biome">Human gut</span></em> - <strong><span id="detected-biome-support">132/179</span></strong>
+        </div>
+        <div class="col-sm">
+          <div class="progress" style="height: 25px">
+            <div id="loading-progress-status" class="progress-bar progress-bar-striped" role=progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">
+              <p class="text-center my-2">
+              <span id="loading-play-pause">⏯️</span>
+              <span id="loading-progress-text">100 / 175</span>
+              </p>
+            </div>
+          </div>
+          <p class="text-center"><a id="show-search-results" href="">Show search results</a></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="mx-auto">
+          <div id="vis-main"></div>
+        </div>
+      </div>
+
+      <div class="row pt-2">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              Homologs found in
+            </div>
+            <div class="card-body">
+              <div id="vis-homologs"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              Gene biome distribution
+            </div>
+            <div class="card-body">
+              <div id="vis-genebiome"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-2">
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              Taxonomic distribution
+            </div>
+            <div class="card-body">
+              <div id="vis-taxonomy"></div>
+              <p>TODO Krona integration</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="card">
+            <div class="card-header">
+              Functional categories of hit genes
+            </div>
+            <div class="card-body">
+              <div id="vis-funccat"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row pt-2">
+        <div class="col">
+          <nav>
+            <div id="domains-tab" class="nav nav-tabs" role="tablist">
+              <a class="nav-item nav-link active" id="nav-smart-tab" data-toggle="tab" href="#nav-smart" role="tab" aria-controls="nav-smart" aria-selected="true">SMART</a>
+              <a class="nav-item nav-link" id="nav-pfam-tab" data-toggle="tab" href="#nav-pfam" role="tab" aria-controls="nav-pfam" aria-selected="false">PFAM</a>
+              <a class="nav-item nav-link" id="nav-eggnog-tab" data-toggle="tab" href="#nav-eggnog" role="tab" aria-controls="nav-eggnog" aria-selected="false">eggNOG</a>
+            </div>
+          </nav>
+          <div id="domains-tabContent" class="tab-content">
+            <div class="tab-pane fade show active" id="nav-smart" role="tabpanel" aria-labelledby="nav-smart-tab">
+              <div class="card">
+                <div class="card-body">
+                  <div id="vis-smart"></div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-pfam" role="tabpanel" aria-labelledby="nav-pfam-tab">
+              <div class="card">
+                <div class="card-body">
+                  <div id="vis-pfam"></div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-eggnog" role="tabpanel" aria-labelledby="nav-eggnog-tab">
+              <div class="card">
+                <div class="card-body">
+                  <div id="vis-eggnog"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

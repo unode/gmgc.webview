@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "description": "A simple bar chart with embedded data.",
+  "data": {
+    "values": [
+      {"domain": "smrtA", "occurrences": 8},
+      {"domain": "smrtB", "occurrences": 5},
+      {"domain": "smrtC", "occurrences": 3},
+      {"domain": "smrtD", "occurrences": 1},
+      {"domain": "smrtE", "occurrences": 1},
+      {"domain": "smrtF", "occurrences": 3},
+      {"domain": "smrtG", "occurrences": 9},
+      {"domain": "smrtH", "occurrences": 7},
+      {"domain": "smrtI", "occurrences": 2}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "domain",
+      "type": "ordinal",
+      "sort": "-y",
+      "axis": {
+        "title": "SMART domain",
+        "labelAngle": -90
+      }
+    },
+    "y": {
+      "field": "occurrences",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of occurrences"
+      }
+    }
+  }
+}
+

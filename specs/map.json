@@ -1,0 +1,131 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v5.json",
+    "width": 500,
+    "height": 240,
+    "autosize": "none",
+    "signals": [
+        {
+            "name": "translate0",
+            "update": "width / 2"
+        },
+        {
+            "name": "translate1",
+            "update": "height / 2"
+        },
+        {
+            "name": "background",
+            "value": "#d2dffb"
+        }
+    ],
+    "projections": [
+        {
+            "name": "projection",
+            "type": "equirectangular",
+            "scale": 80,
+            "rotate": [
+                0,
+                0,
+                0
+            ],
+            "center": [
+                0,
+                0
+            ],
+            "translate": [
+                {
+                    "signal": "translate0"
+                },
+                {
+                    "signal": "translate1"
+                }
+            ]
+        }
+    ],
+    "data": [
+        {
+            "name": "world",
+            "url": "data/world-110m.json",
+            "format": {
+                "type": "topojson",
+                "feature": "countries"
+            }
+        },
+        {
+            "name": "graticule",
+            "transform": [
+                {
+                    "type": "graticule"
+                }
+            ]
+        }
+    ],
+    "marks": [
+        {
+            "type": "shape",
+            "from": {
+                "data": "graticule"
+            },
+            "encode": {
+                "update": {
+                    "background": {
+                        "value": "#ff0000"
+                    },
+                    "strokeWidth": {
+                        "value": 0.5
+                    },
+                    "stroke": {
+                        "value": "#ddd"
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "type": "geoshape",
+                    "projection": "projection"
+                }
+            ]
+        },
+        {
+            "type": "shape",
+            "from": {
+                "data": "world"
+            },
+            "encode": {
+                "update": {
+                    "strokeWidth": {
+                        "value": 0.2
+                    },
+                    "stroke": {
+                        "value": "#bbb"
+                    },
+                    "fill": {
+                        "value": "#f2efea"
+                    },
+                    "zindex": {
+                        "value": 0
+                    }
+                },
+                "hover": {
+                    "strokeWidth": {
+                        "value": 1
+                    },
+                    "stroke": {
+                        "value": "firebrick"
+                    },
+                    "fill": {
+                        "value": "firebrick"
+                    },
+                    "zindex": {
+                        "value": 1
+                    }
+                }
+            },
+            "transform": [
+                {
+                    "type": "geoshape",
+                    "projection": "projection"
+                }
+            ]
+        }
+    ]
+}

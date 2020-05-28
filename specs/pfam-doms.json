@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+  "description": "A simple bar chart with embedded data.",
+  "data": {
+    "values": [
+      {"domain": "domA", "occurrences": 28},
+      {"domain": "domB", "occurrences": 55},
+      {"domain": "domC", "occurrences": 43},
+      {"domain": "domD", "occurrences": 91},
+      {"domain": "domE", "occurrences": 81},
+      {"domain": "domF", "occurrences": 53},
+      {"domain": "domG", "occurrences": 19},
+      {"domain": "domH", "occurrences": 87},
+      {"domain": "domI", "occurrences": 52}
+    ]
+  },
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "domain",
+      "type": "ordinal",
+      "sort": "-y",
+      "axis": {
+        "title": "PFAM domain",
+        "labelAngle": -90
+      }
+    },
+    "y": {
+      "field": "occurrences",
+      "type": "quantitative",
+      "axis": {
+        "title": "Number of occurrences"
+      }
+    }
+  }
+}
+
