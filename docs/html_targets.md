@@ -9,6 +9,11 @@
 * a#show-search-results - Link to listing of all results
 
 * div#vis-main - main visualization with e-values and other scores
+                 these include:
+                   length of hit sequences
+                   bitscore
+                   identity
+                 
 * div#vis-homologs - geographic distribution of homologs
 * div#vis-genebiome - gene biome distribution
 * div#vis-taxonomy - taxonomic distribution
